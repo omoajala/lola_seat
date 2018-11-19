@@ -1,0 +1,106 @@
+import { Component, OnInit } from '@angular/core';
+// import * as seats_formation from "../../lola_seats/data/seats.json"
+import { LolaService } from '../services/lola.service';
+// import test from "*.json"
+import { SeatModel } from '../app/seatModel.component';
+
+export class String {
+  seat: any;
+  row: any;
+  class: any;
+}
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnInit {
+  order: string = 'seat';
+
+  seats: any[][];
+  rowsData: any;
+
+  public model: SeatModel;
+
+  constructor(
+    public service: LolaService
+  ) {}
+
+  ngOnInit() {
+    this.getSeat();
+    // this.sortData()
+  }
+
+  getSeat() {
+    this.service.getSeat()
+      .subscribe((data: any) => {
+        this.seats = data;
+        console.log(this.seats)
+        this.makeRow()
+      });
+  }
+
+  makeRow() {
+    console.log(this.seats.length)
+    this.model = new SeatModel();
+    this.rowsData = []
+    this.model.class = "Hello how are you?"
+
+    for (let obj in this.seats) {
+      debugger
+      this.seats[obj] = [];
+      for (let oj in this.seats[obj]) {
+        console.log(this.seats[obj][oj])
+      }
+    }
+  }
+
+  // sortData() {
+    // console.log(seats)
+    // // this.rows
+    // for (let obj in seats) {
+    //   console.log(obj)
+    // //   if (obj.row in this.rows) {
+    // //     this.rows[obj.row].push(obj.seat)
+    // //   } else {
+    // //     this.rows[obj.row] = [obj.seat]
+    // //   }
+  //   this.seats.sort(function(a, b) {
+  //     return a.seat - b.seat
+  //   });
+  // }
+  // console.log(this.seats)
+  // console.log(obj)
+  // this.rowsData.push(obj.seat)
+  // if(obj.model.row in this.model.row) {
+  //   console.log(obj)
+  // }
+    
+
+
+}
+
+
+<!-- <div class="shape">
+  <div *ngFor="let seat of seats">
+    {{seat}}
+  </div>
+</div> -->
+<table >
+  <tr>
+    <th>A</th>
+    <th>B</th>
+    <th>C</th>
+    <th>D</th>
+    <th>E</th>
+  </tr>
+  <tbody>
+    <tr *ngFor ="let sd of seats">
+      <td>{{sd.seat}}</td>
+    </tr>
+  </tbody>
+</table> 
+
+<!-- <p>{{model.class}}</p> -->
